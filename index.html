@@ -38,7 +38,7 @@
     </style>
 </head>
 
-<body class="body" onload="">
+<body class="body" onload="PopMessage()">
     <div id="nav">
         <nav>
             <button onclick="ChristmasMusic()" style="background-color: #f30d0d;
@@ -82,6 +82,9 @@
     function PauseMusic() {
         var Music = document.getElementById("PlayMusic");
         Music.pause();
+    }
+    function PopMessage() {
+        alert("Merry Christmas!");
     }
 </script>
 <footer class="footer">
