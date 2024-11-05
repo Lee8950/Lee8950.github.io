@@ -1,95 +1,157 @@
 <!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
-    <title>Merry Christmas</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章文本替换器</title>
     <style>
-        .body {
-            background-color: whitesmoke;
-            clear: both;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: large;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
 
-        #nav {
-            background-color: black;
-            clear: both;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: large;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        #article {
-            background-color: whitesmoke;
-            margin-top: 50%;
-            text-align: center;
-            margin-bottom: 50%;
-            clear: both;
-            font-family: \6807\6977\4F53;
-            font-size: xx-large;
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        .footer {
-            background-color: black;
-            color: white;
-            clear: both;
-            text-align: center;
-            padding: 1%;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+            /* 保留空白和换行 */
+            word-wrap: break-word;
+            /* 防止长单词溢出 */
         }
     </style>
 </head>
 
-<body class="body" onload="PopMessage()">
-    <div id="nav">
-        <nav>
-            <a onclick="ChristmasMusic()" style="background-color: #f30d0d;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;">Play Music</a>
-            <a onclick="PauseMusic()" style="background-color: #f30d0d;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;">Pause</a>
-            <a href="https://music.163.com/#/song?id=33419332" style="background-color: #f30d0d;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;">Playing : All I Want For Christmas - Midnight Riders</a>
-        </nav>
-        <audio id="PlayMusic" src="Assets/background.mp3" controls="controls" loop="false" hidden="true"></audio>
+<body>
+    <div class="container">
+        <h1>定型文生成器</h1>
+        <button id="copy", onclick="gocopy()">复制</button>
+        <form id="myForm">
+            <div class="form-group">
+                <label for="articleSelect">选择一篇文章:</label>
+                <select id="articleSelect" name="articles">
+                    <option value="">请选择...</option>
+                    <!-- 选项可以根据需要添加更多 -->
+                    <option value="article1">Kim</option>
+                    <option value="article2">开发中</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="replacements">替换指令 (格式: < 标签>:content):</label>
+                <textarea id="replacements" name="replacements" rows="4" placeholder="例如：<name>:张三"></textarea>
+            </div>
+        </form>
+        <div class="result" id="result">
+            <p>定型文将显示在这里。</p>
+        </div>
     </div>
-    <div id="article">
-        <blockquote>
-            醉后不知天在水, 满船清梦压星河。
-        </blockquote>
-    </div>
+
+    <script>
+        // 示例文章，可以根据需要添加更多
+
+        var old = -1;
+
+        var replaceResult = "";
+
+        function gocopy(){
+            if(document.getElementById('result').querySelector('p').textContent != "")
+                navigator.clipboard.writeText(document.getElementById('result').querySelector('p').textContent);
+            console.log(document.getElementById('result').querySelector('p').textContent);
+        }
+
+        const articles = {
+            article1: "从<location1>访问回来的<people1>全然不顾身体的疲惫，连夜找我们几个<people2>的<people2>商量<event1>。谈得晚了，便送我们出<location2>，要<people3>送我们回<location3>。\
+在去<location4>的路上，我们说：“<people1>，您回去休息吧。您刚从<location1>回来。”<people1>摇摇头，\
+“不碍事，你们知道现在<category1>世界有很多<category_people>不支持<feature1>，不断给我们制造<problem1>。你们是<people2><people2>的未来，你们的事情便是<people2>的大事，是头等大事。”我们都激动了，眼里噙着<tear1>。多好的<people1>呀。\
+<people1>抬头看看<location3>说：“如果世界真像这<location3>这么有序就好了，但是就有一些低级<category_people>，像<enemy2>、<enemy3>，要搞乱这个世界，他们是罪人。”\
+说着，<people1>弯下腰，从<location5>里捡出一个<item1>，然后看着<location3>说：“该死的<enemy1>。”\
+说着他把<item1>奋力向上一抛。很快就见一块<location6>突然爆发出耀眼的<phenomenon1>，然后就崩溃下来。“这是<category_people>的<enemy_weapon>，他们一直在<location6>里<enemy_behavior>，破坏我们的<treasure>，我已经忍了很久了。”<people1>愤愤地说。<people2>的<people2>们都鼓起掌来，为<category1>界有这样的领导者感到自豪。\
+一会儿，<people1>叫来<people3>问：“那个<item1>抛到什么地方了？”“好像是<location7>。”<people3>说。\
+<people1>一怔，说：“赶紧派<people4>去查，看有什么问题没有。”之后<people1>送我们到<location4>门口，一直挥手到看不见我们。\
+第四天我们听说<location7>那边出事了，我们很紧张。而这时<people1>叫我们过去。\
+他依然那么慈祥，让我们坐下说：“<career1>总是要有牺牲的。为<career1>牺牲的<item1>是伟大的。”他这时低下头说：“但我必须承认，我当时<behavior1>的行为太鲁莽了，我在这里向<location1>道歉。我将向<location1>说明情况。”\
+我们顿时热泪盈眶，多好的<people1>呀，他在跟<category_people>斗争过程中的小失误竟然被他记在心里，还道了歉。我们在将来的学习中一定要向<people1>学，学他老人家那宽广的胸怀，和不耻下问的精神。",
+            article2: "开发中",
+            article3: "开发中"
+        };
+
+        document.getElementById('articleSelect').addEventListener('change', function () {
+            updateResult();
+        });
+
+        document.getElementById('replacements').addEventListener('input', function () {
+            updateResult();
+        });
+
+        function updateResult() {
+            const selectedArticle = document.getElementById('articleSelect').value;
+            const replacements = document.getElementById('replacements').value;
+            const resultElement = document.getElementById('result').querySelector('p');
+
+            if (!selectedArticle || !articles[selectedArticle]) {
+                resultElement.textContent = '请选择一篇文章。';
+                return;
+            }
+
+            let articleText = articles[selectedArticle];
+
+            // 解析替换指令  
+            const regex = /<([^>]+)>:(.*?)(?=<|$)/g;
+            let match;
+            while ((match = regex.exec(replacements)) !== null) {
+                const tag = match[1];
+                const content = match[2].trim().replace(/\\/g, '\\\\').replace(/</g, '\\<').replace(/>/g, '\\>'); // 转义特殊字符  
+                const replacementRegex = new RegExp(`<${tag}>`, 'g');
+                articleText = articleText.replace(replacementRegex, content);
+            }
+
+            if (old != selectedArticle) {
+                const tag_regex = /<([^>]+)>/g;
+                let all_tags = new Set(articleText.match(tag_regex));
+                //console.log(all_tags);
+
+                document.getElementById("replacements").value = "";
+
+                all_tags.forEach(function(value){
+                    //console.log(typeof(value));
+                    document.getElementById("replacements").value += value + ":" + value + " ";
+                })
+                //let it = all_tags.values();
+                /*for(let i = 0; i < all_tags.size; i++) {
+                    console.log(all_tags);
+                    document.getElementById("replacements").value += toString(all_tags[i]) + ":" + toString(all_tags[i]) + " ";
+                }*/
+
+            }
+            old = selectedArticle;
+            resultElement.textContent = articleText;
+            replaceResult = document.articleText;
+        }  
+    </script>
 </body>
 
-<script>
-    function ChristmasMusic() {
-        let Music = document.getElementById("PlayMusic");
-        Music.play();
-    }
-    function PauseMusic() {
-        let Music = document.getElementById("PlayMusic");
-        Music.pause();
-    }
-    function PopMessage() {
-        alert("Merry Christmas!");
-    }
-</script>
-<footer class="footer">
-    <p>
-        Powered by <a href="https://github.com/Lee8950" style="text-decoration:none;text-align:center;color:lightskyblue">RLYL</a>.
-    </p>
-</footer>
+</html>

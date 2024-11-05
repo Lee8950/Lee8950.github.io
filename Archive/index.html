@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Merry Christmas</title>
+    <meta charset="UTF-8">
+    <style>
+        .body {
+            background-color: whitesmoke;
+            clear: both;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: large;
+        }
+
+        #nav {
+            background-color: black;
+            clear: both;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: large;
+        }
+
+        #article {
+            background-color: whitesmoke;
+            margin-top: 50%;
+            text-align: center;
+            margin-bottom: 50%;
+            clear: both;
+            font-family: \6807\6977\4F53;
+            font-size: xx-large;
+        }
+
+        .footer {
+            background-color: black;
+            color: white;
+            clear: both;
+            text-align: center;
+            padding: 1%;
+        }
+    </style>
+</head>
+
+<body class="body" onload="PopMessage()">
+    <div id="nav">
+        <nav>
+            <a onclick="ChristmasMusic()" style="background-color: #f30d0d;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;">Play Music</a>
+            <a onclick="PauseMusic()" style="background-color: #f30d0d;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;">Pause</a>
+            <a href="https://music.163.com/#/song?id=33419332" style="background-color: #f30d0d;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;">Playing : All I Want For Christmas - Midnight Riders</a>
+        </nav>
+        <audio id="PlayMusic" src="Assets/background.mp3" controls="controls" loop="false" hidden="true"></audio>
+    </div>
+    <div id="article">
+        <blockquote>
+            醉后不知天在水, 满船清梦压星河。
+        </blockquote>
+    </div>
+</body>
+
+<script>
+    function ChristmasMusic() {
+        let Music = document.getElementById("PlayMusic");
+        Music.play();
+    }
+    function PauseMusic() {
+        let Music = document.getElementById("PlayMusic");
+        Music.pause();
+    }
+    function PopMessage() {
+        alert("Merry Christmas!");
+    }
+</script>
+<footer class="footer">
+    <p>
+        Powered by <a href="https://github.com/Lee8950" style="text-decoration:none;text-align:center;color:lightskyblue">RLYL</a>.
+    </p>
+</footer>
