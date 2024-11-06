@@ -56,8 +56,9 @@
                 <select id="aspectSelect" name="Facts about IPv4">
                     <option value="">请选择...</option>
                     <!-- 选项可以根据需要添加更多 -->
-                    <option value="option1">是否是组播地址</option>
-                    <option value="option2">开发中</option>
+                    <option value="ipv4_multicast">是否是组播地址</option>
+                    <option value="ipv6_expansion">(ipv6(临时))扩写</option>
+                    <option value="option3">开发中</option>
                 </select>
             </div>
             <div class="form-group">
@@ -84,8 +85,11 @@
         //});
 
         function calculate() {
-            if(aspectSelect.value === "option1") {
+            if(aspectSelect.value === "ipv4_multicast") {
                 resultElement.textContent = isMulticastAddressJudge(convertIPv4StringToBytes(user_input_Textarea.value)) ? "Yes" : "No";
+            }
+            if(aspectSelect.value == "ipv6_expansion") {
+                resultElement.textContent = restoreFullLengthAddress(user_input_Textarea.value);
             }
         }
 
@@ -118,6 +122,67 @@
             return isMulticastAddressJudge(convertIPv4StringToBytes(ip));
         }
         
+        function restoreFullLengthAddress(ip) {
+            let shrink = false;
+            let shrinkaddr = -1;
+            
+            // 0. Check if there is a abbr
+            for (let i = 0; i < ip.length - 1; i++) {
+                if (ip[i] === ip[i + 1] && ip[i] === ':') {
+                    shrink = true;
+                    shrinkaddr = i;
+                    break;
+                }
+            }
+            
+            // 0a. Expand the abbr
+            let currentcolon = 0;
+            let prev = '';
+            let post = '';
+            
+            if (shrink) {
+                for (let i = 0; i < ip.length; i++) {
+                    if (ip[i] === ':') currentcolon += 1;
+                }
+                prev = ip.substring(0, shrinkaddr + 1);
+                post = ip.substring(shrinkaddr + 1, ip.length);
+            }
+            
+            // need to add 7 - currentcolon sc
+            let mid = '';
+            for (let i = 0; i < 7 - currentcolon; i++) {
+                mid += '0000:';
+            }
+            mid += '0000';
+            
+            let stage0 = prev + mid + post;
+            
+            // 1. Expand each unit to full length
+            let fullLength = '';
+            let tmp = '';
+            
+            for (let i = 0; i < stage0.length; i++) {
+                if (stage0[i] !== ':') {
+                    tmp += stage0[i];
+                } else if (stage0[i] === ':') {
+                    let zf = '';
+                    for (let j = 0; j < 4 - tmp.length; j++) zf += '0';
+                    fullLength += zf + tmp + ':';
+                    tmp = '';
+                }
+            }
+            
+            {
+                let zf = '';
+                for (let j = 0; j < 4 - tmp.length; j++) zf += '0';
+                fullLength += zf + tmp;
+                tmp = '';
+            }
+            
+            return fullLength;
+        }
+        
+
     </script>
 </body>
 
