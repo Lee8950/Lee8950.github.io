@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章文本替换器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+            /* 保留空白和换行 */
+            word-wrap: break-word;
+            /* 防止长单词溢出 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>IPv4 Miscellaneous</h1>
+        <button id="copy", onclick="calculate()">计算</button>
+        <form id="myForm">
+            <div class="form-group">
+                <label for="aspectSelect">选择一个方面:</label>
+                <select id="aspectSelect" name="Facts about IPv4">
+                    <option value="">请选择...</option>
+                    <!-- 选项可以根据需要添加更多 -->
+                    <option value="option1">是否是组播地址</option>
+                    <option value="option2">开发中</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="user_input">输入</label>
+                <textarea id="user_input" name="user_input" rows="4" placeholder="例如: 224.0.0.1"></textarea>
+            </div>
+        </form>
+        <div class="result" id="result">
+            <p>结果将显示在这里。</p>
+        </div>
+    </div>
+
+    <script>
+
+        const aspectSelect = document.getElementById('aspectSelect');
+        const user_input_Textarea = document.getElementById('user_input');
+        const resultElement = document.getElementById('result').querySelector('p');
+        //document.getElementById('articleSelect').addEventListener('change', function () {
+        //    updateResult();
+        //});
+
+        //document.getElementById('replacements').addEventListener('input', function () {
+        //    updateResult();
+        //});
+
+        function calculate() {
+            if(aspectSelect.value === "option1") {
+                resultElement.textContent = isMulticastAddressJudge(convertIPv4StringToBytes(user_input_Textarea.value)) ? "Yes" : "No";
+            }
+        }
+
+        function convertIPv4StringToBytes(ip) {
+            let ip_num = 0x00000000;
+            let tmp = 0x00000000;
+            for(let i = 0; i < ip.length; i++) {
+                if(ip[i]>='0'&&ip[i]<='9') {
+                    tmp = 10 * tmp + Number(ip[i]);
+                }
+                else if(ip[i]=='.') {
+                    ip_num = ((ip_num << 8) >>> 0 | tmp) >>> 0;
+                    //tmp = 0;
+                    tmp = 0x00000000;
+                }
+                else throw new Error("invalid IPv4 address");
+            }
+            ip_num = ((ip_num << 8) >>> 0 | tmp) >>> 0;
+            
+            return ip_num;
+        }
+        
+        function isMulticastAddressJudge(ip) {
+            console.log(ip.toString(16));
+            return ((ip & (0xF0000000)) >>> 0 == 0xE0000000);
+            //return ((ip & (0xF00000)) == 0xE00000);
+        }
+        
+        function isMulticastAddress(ip) {
+            return isMulticastAddressJudge(convertIPv4StringToBytes(ip));
+        }
+        
+    </script>
+</body>
+
+</html>
