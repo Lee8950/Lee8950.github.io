@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章文本替换器</title>
+    <title>定型文生成器</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,6 +62,7 @@
                     <option value="kim">Kim</option>
                     <option value="secondgame">乙游大世界</option>
                     <option value="showmaker">Showmaker</option>
+                    <option value="self_intro">自我介绍</option>
                 </select>
             </div>
             <div class="form-group">
@@ -106,7 +107,9 @@
 如果想要我们的<attr4>还有<item3>；\
 要我说，你们<object>吃的也真是太好了吧；\
 今天我已经垂直入坑了！",
-            showmaker: "那一年的<match>是<teamA>对<teamB>，最终<score>。当时我看见<player>坐在椅子上泣不成声，那一刻我就在想如果我能成为<profession>，我一定要赢下所有。如今奖杯就在眼前，我必须考虑这会不会是我此生仅有的机会。我相信<organization>能有过去的霸主地位，<player>功不可没。重铸<organization>的荣光，我辈义不容辞！"
+            showmaker: "那一年的<match>是<teamA>对<teamB>，最终<score>。当时我看见<player>坐在椅子上泣不成声，那一刻我就在想如果我能成为<profession>，我一定要赢下所有。如今奖杯就在眼前，我必须考虑这会不会是我此生仅有的机会。我相信<organization>能有过去的霸主地位，<player>功不可没。重铸<organization>的荣光，我辈义不容辞！",
+            self_intro: "<age1>岁的时候我想成为<profession>，<relative>和我说还太早了。今年是我想<career>的第<time1>个年头，我已经<age2>岁了，同龄且曾经相识的<player1>已经拿到了<title1>，而我才刚刚进入<organization1>。希望自己像bgm一样——别怕变老吧。我会一直努力下去，直到实现我的梦想。\n<grade>级<university><major><hierarchy>在读<game1>时长<time2>h/<achievement1>\n感谢<guider1>老师，老师的复盘真的很有用，收获很多，想提升思路的同学们真的可以冲！感谢<guider2><guider3><guider4><guider5><guider6>愿意相信我和我一起组队。感谢<guider7> 在<skill1>上对我的指点 感谢所有鼓励我相信我并愿意陪着我的伙伴们，我爱你们。希望这个长达<time3>年的故事能在今年回归主线，感谢你能看到这里！如果想要了解更多，主页置顶有自我介绍。"
+                
         };
 
         document.getElementById('articleSelect').addEventListener('change', function () {
