@@ -140,22 +140,29 @@
             let prev = '';
             let post = '';
             
+            let stage0 = '';
+
             if (shrink) {
                 for (let i = 0; i < ip.length; i++) {
                     if (ip[i] === ':') currentcolon += 1;
                 }
                 prev = ip.substring(0, shrinkaddr + 1);
                 post = ip.substring(shrinkaddr + 1, ip.length);
+                // need to add 7 - currentcolon sc
+                let mid = '';
+                for (let i = 0; i < 7 - currentcolon; i++) {
+                    mid += '0000:';
+                }
+                mid += '0000';
+                stage0 = prev + mid + post;
+            }
+            else {
+                stage0 = ip;
             }
             
-            // need to add 7 - currentcolon sc
-            let mid = '';
-            for (let i = 0; i < 7 - currentcolon; i++) {
-                mid += '0000:';
-            }
-            mid += '0000';
             
-            let stage0 = prev + mid + post;
+            
+            
             
             // 1. Expand each unit to full length
             let fullLength = '';
